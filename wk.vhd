@@ -41,7 +41,7 @@ architecture Behavioral of wk is
 signal key_store : std_logic_vector (127 downto 0);
 begin
 
-load_key_and_out : process (round) is
+load_key_and_out : process (key_in) is
 							begin 
 								if (round=0) then
 									key_store<=key_in;
