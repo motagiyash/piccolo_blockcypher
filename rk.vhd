@@ -33,7 +33,7 @@ use ieee.numeric_std.all;
 --use UNISIM.VComponents.all;
 
 entity rk is
-generic( round : integer
+generic( round : integer range 0 to 32
 			);
 port ( key_in : in std_logic_vector (127 downto 0);
 		 key_out_rk1 : out std_logic_vector (15 downto 0);
@@ -42,68 +42,77 @@ end rk;
 
 architecture Behavioral of rk is
 
-type key_array is array (7 downto 0) of std_logic_vector (15 downto 0);
-signal ka : key_array;
-signal conk : std_logic_vector (31 downto 0);
-
-component constant_gen is
-generic( round : integer
-			);
-port ( con : out std_logic_vector (31 downto 0));
-end component constant_gen;
-
-begin	
-
-con_gen : constant_gen
-				generic map (round => round)
-				port map (con => conk);
-			
-
-key_upload_process : process (key_in)
-
 begin
-		ka(0)<= key_in(15 downto 0);
-		ka(1)<= key_in(31 downto 16);
-		ka(2)<= key_in(47 downto 32);
-		ka(3)<= key_in(63 downto 48);
-		ka(4)<= key_in(79 downto 64);
-		ka(5)<= key_in(95 downto 80);
-		ka(6)<= key_in(111 downto 96);
-		ka(7)<= key_in(127 downto 112);
-		
-end process key_upload_process;
-	
-Key_gen_proc :process (key_in)
-	
+
+Key_gen_process : process (key_in) is
 	begin
-		if (((round*2)+2)mod 8 = 0 ) then
-				ka(0)<=ka(2);
-				ka(1)<=ka(1);
-				ka(2)<=ka(6);
-				ka(3)<=ka(7);
-				ka(4)<=ka(0);
-				ka(5)<=ka(3);
-				ka(6)<=ka(4);
-				ka(7)<=ka(5);
-		else 
-				key_out_rk1<=ka(((round*2)+2) mod 8) xor conk(31 downto 16);
-				
-		end if;
-		
-		if ((((round*2)+1)+2)mod 8 = 0 ) then
-				ka(0)<=ka(2);
-				ka(1)<=ka(1);
-				ka(2)<=ka(6);
-				ka(3)<=ka(7);
-				ka(4)<=ka(0);
-				ka(5)<=ka(3);
-				ka(6)<=ka(4);
-				ka(7)<=ka(5);
-		else 
-				key_out_rk2<=ka((((round*2)+1)+2) mod 8) xor conk(15 downto 0);
-				
-		end if;
-end process;
-	
-				
+		case round is 
+			when 0 => key_out_rk1<= key_in(47 downto 32);
+						 key_out_rk2<= key_in(63 downto 48);
+			when 1 => key_out_rk1<= key_in(79 downto 64);
+						 key_out_rk2<= key_in(111 downto 96);
+			when 2 => key_out_rk1<= key_in(127 downto 112);
+						 key_out_rk2<= key_in(63 downto 48);
+			when 3 => key_out_rk1<= key_in(47 downto 32);
+						 key_out_rk2<= key_in(31 downto 16);
+			when 4 => key_out_rk1<= key_in(111 downto 96);
+						 key_out_rk2<= key_in(127 downto 112);
+			when 5 => key_out_rk1<= key_in(15 downto 0);
+						 key_out_rk2<= key_in(63 downto 48);
+			when 6 => key_out_rk1<= key_in(79 downto 64);
+						 key_out_rk2<= key_in(95 downto 80);
+			when 7 => key_out_rk1<= key_in(111 downto 96);
+						 key_out_rk2<= key_in(31 downto 16);
+			when 8 => key_out_rk1<= key_in(79 downto 64);
+						 key_out_rk2<= key_in(111 downto 96);
+			when 9 => key_out_rk1<= key_in(47 downto 32);
+						 key_out_rk2<= key_in(127 downto 112);
+			when 10 =>key_out_rk1<= key_in(15 downto 0);
+						 key_out_rk2<= key_in(63 downto 48);
+			when 11 =>key_out_rk1<= key_in(79 downto 64);
+						 key_out_rk2<= key_in(31 downto 16);
+			when 12 =>key_out_rk1<= key_in(15 downto 0);
+						 key_out_rk2<= key_in(63 downto 48);
+			when 13 =>key_out_rk1<= key_in(111 downto 96);
+						 key_out_rk2<= key_in(95 downto 80);
+			when 14 =>key_out_rk1<= key_in(47 downto 32);
+						 key_out_rk2<= key_in(127 downto 112);
+			when 15 =>key_out_rk1<= key_in(15 downto 0);
+						 key_out_rk2<= key_in(31 downto 16);
+			when 16 =>key_out_rk1<= key_in(47 downto 32);
+						 key_out_rk2<= key_in(127 downto 112);
+			when 17 =>key_out_rk1<= key_in(79 downto 64);
+						 key_out_rk2<= key_in(63 downto 48);
+			when 18 =>key_out_rk1<= key_in(111 downto 96);
+						 key_out_rk2<= key_in(95 downto 80);
+			when 19 =>key_out_rk1<= key_in(47 downto 32);
+						 key_out_rk2<= key_in(31 downto 16);
+			when 20 =>key_out_rk1<= key_in(111 downto 96);
+						 key_out_rk2<= key_in(95 downto 80);
+			when 21 =>key_out_rk1<= key_in(15 downto 0);
+						 key_out_rk2<= key_in(127 downto 112);
+			when 22 =>key_out_rk1<= key_in(79 downto 64);
+						 key_out_rk2<= key_in(63 downto 48);
+			when 23 =>key_out_rk1<= key_in(111 downto 96);
+						 key_out_rk2<= key_in(31 downto 16);
+			when 24 =>key_out_rk1<= key_in(79 downto 64);
+						 key_out_rk2<= key_in(63 downto 48);
+			when 25 =>key_out_rk1<= key_in(47 downto 32);
+						 key_out_rk2<= key_in(95 downto 80);
+			when 26 =>key_out_rk1<= key_in(15 downto 0);
+						 key_out_rk2<= key_in(127 downto 112);
+			when 27 =>key_out_rk1<= key_in(79 downto 64);
+						 key_out_rk2<= key_in(31 downto 16);
+			when 28 =>key_out_rk1<= key_in(15 downto 0);
+						 key_out_rk2<= key_in(127 downto 112);
+			when 29 =>key_out_rk1<= key_in(111 downto 96);
+						 key_out_rk2<= key_in(63 downto 48);
+			when 30 =>key_out_rk1<= key_in(47 downto 32);
+						 key_out_rk2<= key_in(95 downto 80);
+			when others =>key_out_rk1<= "0000000000000000";
+						     key_out_rk2<= "0000000000000000";
+		end case;
+	end process Key_gen_process;
+						 
 end Behavioral;
+
