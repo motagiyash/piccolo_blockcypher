@@ -2,9 +2,9 @@
 -- Company: Esigelec
 -- Engineer: Yash Motagi
 -- 
--- Create Date:    08:10:13 07/04/2018 
--- Design Name: 
--- Module Name:    constant_gen - Behavioral 
+-- Create Date:    20:52:29 07/12/2018 
+-- Design Name: 	Piccolo Blockcypher
+-- Module Name:    piccoloroundpermutation - Behavioral 
 -- Project Name: 
 -- Target Devices: 
 -- Tool versions: 
@@ -30,7 +30,7 @@ use IEEE.numeric_std.all;
 --use UNISIM.VComponents.all;
 
 entity constant_gen is
-generic( round : integer
+generic( round : integer range 0 to 32
 			);
 port ( con : out std_logic_vector (31 downto 0));
 			
@@ -39,16 +39,18 @@ end constant_gen;
 architecture Behavioral of constant_gen is
 
 signal c_i,c_j : std_logic_vector (4 downto 0);
-signal c : unsigned (1 downto 0) := "00";
-variable a : integer := round;
+signal c : std_logic_vector (1 downto 0) := "00";
+constant const: std_logic_vector (31 downto 0) := x"6547a98b"; 
+signal r : integer;
+
 begin
 
-Constant_gen_process: process (a) is
+r<=round;
+
+Constant_gen_process: process (r) is
 							begin
-							   c_i<=std_logic_vector(to_unsigned(round, c_i'length));  
-								c_j<=std_logic_vector(to_unsigned((round+1), c_i'length));
-								con <= (c_j & c_i & c_j & c & c_j & c_i & c_j) xor (01100101010001111010100110001011); 
+							   c_i <=std_logic_vector(to_unsigned(round, c_i'length));  
+								c_j <=std_logic_vector(to_unsigned((round+1), c_i'length));
+								con <= c_j & c_i & c_j & c & c_j & c_i & c_j xor const; 
 							end process Constant_gen_process;
-
-
-end Behavioral;
+end behavioral;
