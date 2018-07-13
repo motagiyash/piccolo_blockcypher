@@ -30,7 +30,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 --use UNISIM.VComponents.all;
 
 entity wk is
-generic( round : integer
+generic( round : integer range 0 to 32
 			);
 port ( key_in : in std_logic_vector (127 downto 0);
 		 key_out1_wk : out std_logic_vector (15 downto 0);
