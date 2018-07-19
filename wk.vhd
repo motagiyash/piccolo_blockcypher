@@ -47,7 +47,7 @@ load_key_and_out : process (key_in) is
 									key_store<=key_in;
 									key_out1_wk<=key_store(7 downto 0) & key_store(31 downto 24);
 									key_out2_wk<=key_store(23 downto 16) & key_store(15 downto 8);
-								elsif (round=31) then
+								elsif (round=30) then
 									key_out1_wk<=key_store(71 downto 64) & key_store(127 downto 120);
 									key_out2_wk<=key_store(119 downto 112) & key_store(79 downto 72);
 								end if;
