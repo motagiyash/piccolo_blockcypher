@@ -94,12 +94,17 @@ generic map( round => round
 port map(	data_in  => round_calculated_output,
 	   data_out => cyphered);
 
-calculation_process : process (plaintext) is
+calculation_process : process (plaintext,function_a_out,function_b_out) is
 begin
  l0 <= plaintext(15 downto 0) xor wk0;
  l1 <= plaintext(31 downto 16) xor rk0 xor function_a_out;
  l2 <= plaintext(47 downto 32) xor wk1;
  l3 <= plaintext(63 downto 48) xor rk1 xor function_b_out;
- round_calculated_output <= l0 & l1 & l2 & l3;
 end process calculation_process; 
+
+round_calculation_process : process (l0,l1,l2,l3) is
+begin
+	round_calculated_output <= l0 & l1 & l2 & l3;
+end process round_calculation_process;
+
 end Behavioral;
