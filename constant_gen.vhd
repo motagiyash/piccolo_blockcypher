@@ -38,7 +38,8 @@ end constant_gen;
 
 architecture Behavioral of constant_gen is
 
-signal c_i,c_j : std_logic_vector (4 downto 0);
+signal c_i : std_logic_vector (4 downto 0) := "00000"; 
+signal c_j : std_logic_vector (4 downto 0);
 signal c : std_logic_vector (1 downto 0) := "00";
 constant const: std_logic_vector (31 downto 0) := x"6547a98b"; 
 signal r : integer;
@@ -48,8 +49,7 @@ begin
 r<=round;
 
 Constant_gen_process: process (r) is
-							begin
-							   c_i <=std_logic_vector(to_unsigned(round, c_i'length));  
+							begin  
 								c_j <=std_logic_vector(to_unsigned((round+1), c_i'length));
 								con <= c_j & c_i & c_j & c & c_j & c_i & c_j xor const; 
 							end process Constant_gen_process;
