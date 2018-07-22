@@ -6,3 +6,6 @@ email: motagiyash@gmail.com
 
 Design and testing of 64 bit data and 128 bit key piccolo block_cypher.
 
+The project is still work in progress,
+As of 22/7/2018 each generate is generating cyphered values.
+But the L3 pipe in the "piccoloenc" is producing wrong values.
