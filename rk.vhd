@@ -124,9 +124,9 @@ Key_gen_process : process (key_store) is
 			when 29 =>key_out_rk1<= key_store(111 downto 96) xor const(31 downto 16);
 						 key_out_rk2<= key_store(63 downto 48) xor const (15 downto 0);
 			when 30 =>key_out_rk1<= key_store(47 downto 32) xor const(31 downto 16);
-						 key_out_rk2<= key_store(95 downto 80);
-			when others =>key_out_rk1<= "0000000000000000";
-						     key_out_rk2<= "0000000000000000";
+						 key_out_rk2<= key_store(95 downto 80) xor const (15 downto 0);
+			when others =>		key_out_rk1<= "0000000000000000";
+						 key_out_rk2<= "0000000000000000";
 		end case;
 	end process Key_gen_process;
 						 
