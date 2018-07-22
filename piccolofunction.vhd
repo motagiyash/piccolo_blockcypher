@@ -107,7 +107,7 @@ port map (datai => m_out_3,
 		
 function_out : process (data_in) is
 begin
-	data_out <= s7_out & s6_out & s5_out & s4_out;
+	data_out <= s4_out & s5_out & s6_out & s7_out;
 end process function_out;	
 
 end Behavioral;
