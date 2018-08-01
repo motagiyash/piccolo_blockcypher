@@ -41,7 +41,7 @@ architecture Behavioral of piccolomatrix is
 signal x0,x1,x2,x3 : std_logic_vector (4 downto 0);
 signal polynomial : std_logic_vector (4 downto 0) := "10011";
 signal out_buffer_0,out_buffer_1,out_buffer_2,out_buffer_3 : std_logic_vector (4 downto 0);
-signal s0,s1,s2,s3 : unsigned (3 downto 0);
+
 begin
 
 x_process : process (data_i_s0,data_i_s1,data_i_s2,data_i_s3) is
