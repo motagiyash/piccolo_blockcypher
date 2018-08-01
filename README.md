@@ -14,3 +14,4 @@ As of 2/8/2018
 Have figured out the problem , the problem was due to wrong matrix logic , Matrix 
 logic is updated , still matrix file has some syntax errors.
 Matrix is solved using by Galois field method.
+Also made slight changes in wk and rk files.
