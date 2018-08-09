@@ -15,3 +15,8 @@ Have figured out the problem , the problem was due to wrong matrix logic , Matri
 logic is updated , still matrix file has some syntax errors.
 Matrix is solved using by Galois field method.
 Also made slight changes in wk and rk files.
+
+
+As of 9/8/2018
+Major Update as i added Different logic for round 30 of the piccolo block cypher.
+Added file piccoloenc_30.vhd
