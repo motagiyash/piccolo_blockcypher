@@ -1,4 +1,4 @@
-----------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
 -- Company: Esigelec
 -- Engineer: Yash Motagi
 -- 
@@ -19,8 +19,6 @@
 ----------------------------------------------------------------------------------
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use ieee.std_logic_unsigned.all;
-use ieee.std_logic_arith.all;
 use IEEE.NUMERIC_STD.all;
 
 entity piccolomatrix is
@@ -45,12 +43,13 @@ signal out_buffer_0,out_buffer_1,out_buffer_2,out_buffer_3 : std_logic_vector (4
 begin
 
 x_process : process (data_i_s0,data_i_s1,data_i_s2,data_i_s3) is
-begin
-x0<=((00010)*data_i_s0 xor (00010)*data_i_s1 + data_i_s1 xor data_i_s2 xor data_i_s3);
-x1<=(data_i_s0 xor (00010)*data_i_s1 xor (00010)*data_i_s2 + data_i_s2 xor data_i_s3);
-x2<=(data_i_s0 xor data_i_s1 xor (00010)*data_i_s2 xor (00010)*data_i_s3 + data_i_s3);
-x3<=((00010)*data_i_s0 + data_i_s0 xor data_i_s1 xor data_i_s2 xor (00010)*data_i_s3);
+begin 
+x0<=(data_i_s0 & '0') xor ((data_i_s1 & '0') xor ('0' & data_i_s1)) xor ('0' & data_i_s2) xor ('0' & data_i_s3); 
+x1<=('0' & data_i_s0) xor (data_i_s1 & '0') xor ((data_i_s2 & '0') xor ('0' & data_i_s2)) xor ('0' & data_i_s3); 
+x2<=('0' & data_i_s0) xor ('0' & data_i_s1) xor (data_i_s2 & '0') xor ((data_i_s3 & '0') xor ('0' & data_i_s3)); 
+x3<=((data_i_s0 & '0') xor ('0' & data_i_s0)) xor ('0' & data_i_s1) xor ('0' & data_i_s2) xor (data_i_s3 & '0'); 
 end process x_process;
+
 
 update_process : process (x0,x1,x2,x3) is
 begin
@@ -98,3 +97,4 @@ end process out_process_3;
 
 
 end Behavioral;
+
